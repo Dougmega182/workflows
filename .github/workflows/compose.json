@@ -1,0 +1,19 @@
+{
+    "name": "autobots",
+    "description": "A PHP web application",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "vlucas/phpdotenv": "^5.5",   // For managing environment variables
+        "monolog/monolog": "^2.0",    // Logging package
+        "guzzlehttp/guzzle": "^7.0"   // HTTP client (for APIs)
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "scripts": {
+        "start": "php -S localhost:8000 -t public"
+    }
+}
