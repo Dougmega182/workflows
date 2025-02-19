@@ -1,0 +1,40 @@
+name: Deploy Node.js to Azure
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: |
+          npm install
+          npm run build || echo "No build step found"
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }} # Ensure you have this set in GitHub Secrets
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'Autobots'  # Your Azure Web App Name
+          package: '.' # Deploy the root directory (must contain `server.js`)
+
+      - name: Restart Azure Web App
+        run: |
+          az webapp restart --name Autobots --resource-group autobot
