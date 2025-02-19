@@ -1,0 +1,29 @@
+name: Deploy PHP to Azure
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # 👈 Allows manual trigger
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Azure Login # 👈 Logs into Azure before deploying
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }} # 👈 Must be set in GitHub Secrets
+
+      - name: Deploy to Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'Autobots'  # 👈 Your Azure Web App Name
+          package: '.'
+     
+      - name: Checkout Code
+        uses: actions/checkout@v3
