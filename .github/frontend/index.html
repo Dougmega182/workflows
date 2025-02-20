@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tradesman Sign-In</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Tradesman Sign-In</h2>
+        <form id="signForm">
+            <input type="text" id="firstName" placeholder="First Name" required>
+            <input type="text" id="lastName" placeholder="Last Name" required>
+            <input type="text" id="company" placeholder="Company" required>
+            <select id="siteId" required>
+                <option value="1">119 Mcilwraith St</option>
+                <option value="2">63 Albert St</option>
+                <option value="3">1/39 Ashley St</option>
+                <option value="4">385 Barkly St</option>
+                <option value="5">47 Panorama Drv</option>
+                <option value="6">89 Glen Park Rd</option>
+                
+            </select>
+            <button type="button" onclick="submitForm('signin')">Sign In</button>
+            <button type="button" onclick="submitForm('signout')">Sign Out</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
