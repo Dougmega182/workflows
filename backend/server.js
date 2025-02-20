@@ -9,8 +9,8 @@ const port = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
-// ✅ Serve the frontend files
-app.use(express.static(path.join(__dirname, '../frontend')));
+// ✅ Serve the frontend files from the correct directory
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 // Health check route
 app.get('/health', (req, res) => {
@@ -19,7 +19,7 @@ app.get('/health', (req, res) => {
 
 // ✅ Serve index.html when accessing `/`
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/index.html'));
+    res.sendFile(path.join(__dirname, 'frontend/index.html'));
 });
 
 // MySQL Connection
