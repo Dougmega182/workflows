@@ -22,10 +22,10 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install
-          npm run build || echo "No build step found"
+          npm run dev || echo "No build step found"
 
       - name: Azure Login
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }} # Ensure you have this set in GitHub Secrets
 
