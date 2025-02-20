@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # Allows manual trigger
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -22,22 +22,21 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install
-          npm run dev || echo "No build step found"
 
       - name: Azure Login
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.0b14b0c2-80fe-42e8-9c62-c4ed8e568065}}
-          tenant-id: ${{ secrets.9227cf50-83cd-43aa-9126-38802b38e5dc}}
-          subscription-id: ${{ secrets.023c9b67-6531-46e0-be9b-b1cdbece5196}}
-          client-secret: ${{ secrets.gIy8Q~d6b1UGC7ohFnX_EBvV.S1hTP~M_s213dfl}} # Ensure you have this set in GitHub Secrets
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'Autobots'  # Your Azure Web App Name
-          package: '.' # Deploy the root directory (must contain `server.js`)
+          app-name: 'autobots'
+          package: '.'
 
       - name: Restart Azure Web App
         run: |
-          az webapp restart --name Autobots --resource-group autobot
+          az webapp restart --name autobots --resource-group autobot
