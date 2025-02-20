@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
+const path = require('path');
 
 const app = express(); // ✅ Define app before using it
 const port = process.env.PORT || 8080;
@@ -8,9 +9,17 @@ const port = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
+// ✅ Serve the frontend files
+app.use(express.static(path.join(__dirname, '../frontend')));
+
 // Health check route
 app.get('/health', (req, res) => {
     res.send({ status: "Server is running" });
+});
+
+// ✅ Serve index.html when accessing `/`
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 // MySQL Connection
@@ -59,4 +68,5 @@ app.get('/history/:siteId', (req, res) => {
     });
 });
 
+// Start the server
 app.listen(port, '0.0.0.0', () => console.log(`Server running on port ${port}`));
