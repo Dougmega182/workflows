@@ -25,7 +25,7 @@ const mysql = require('mysql2/promise'); // Using promise-based version
 const cors = require('cors');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
@@ -263,7 +263,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start server with error handling
-app.listen(port, () => console.log(`Server running on port ${port}`))
+app.listen(port, '0.0.0.0', () => console.log(`Server running on port ${port}`));
     .on('error', (err) => {
         console.error('Server failed to start:', err);
         process.exit(1);
