@@ -28,9 +28,9 @@ jobs:
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.0b14b0c2-80fe-42e8-9c62-c4ed8e568065}}
-          tenant-id: ${{ secrets.9227cf50-83cd-43aa-9126-38802b38e5dc }}
-          subscription-id: ${{ secrets.023c9b67-6531-46e0-be9b-b1cdbece5196 }}
-          client-secret: ${{ secrets.8738Q~GVmKzsSJxy38yNVru_BgoR.697EZkzncQ7 }} # Ensure you have this set in GitHub Secrets
+          tenant-id: ${{ secrets.9227cf50-83cd-43aa-9126-38802b38e5dc}}
+          subscription-id: ${{ secrets.023c9b67-6531-46e0-be9b-b1cdbece5196}}
+          client-secret: ${{ secrets.gIy8Q~d6b1UGC7ohFnX_EBvV.S1hTP~M_s213dfl}} # Ensure you have this set in GitHub Secrets
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
