@@ -36,7 +36,7 @@ jobs:
         with:
           app-name: 'autobots'
           package: '.'
-          slot-name: 'production'  # Add this line to explicitly deploy to production
+          slot-name: 'dbgrgmdrgphhd0c9'  # Add this line to explicitly deploy to production
 
       - name: Restart Azure Web App
         run: |
