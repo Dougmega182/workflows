@@ -13,13 +13,24 @@ app.use(express.json());
 const dbConfig = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    password: process.env.DB_PASS,  // Changed from DB_PASSWORD to DB_PASS
     database: process.env.DB_NAME,
     ssl: { rejectUnauthorized: false }
 };
 
 // Database connection pool instead of single connection
-const pool = mysql.createPool(dbConfig);
+const { pool, testConnection } = require('./database');
+
+// Test connection when server starts
+testConnection()
+    .then(() => {
+        // Start your Express server here
+        app.listen(port, () => console.log(`Server running on port ${port}`));
+    })
+    .catch(err => {
+        console.error('Failed to start server:', err);
+        process.exit(1);
+    });
 
 // Middleware to validate request body
 const validateAttendanceData = (req, res, next) => {
