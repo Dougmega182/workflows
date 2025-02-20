@@ -1,3 +1,24 @@
+// Add this at the top of your server.js to check if env variables are loaded
+console.log('Environment Variables Check:', {
+    host: process.env.DB_HOST ? 'Set' : 'Missing',
+    user: process.env.DB_USER ? 'Set' : 'Missing',
+    pass: process.env.DB_PASS ? 'Set' : 'Missing',
+    database: process.env.DB_NAME ? 'Set' : 'Missing'
+});
+
+// Add a basic health check endpoint
+app.get('/health', async (req, res) => {
+    try {
+        await pool.query('SELECT 1');
+        res.json({ status: 'healthy' });
+    } catch (err) {
+        console.error('Health check failed:', err);
+        res.status(503).json({ 
+            status: 'unhealthy',
+            error: err.message 
+        });
+    }
+});
 // Backend: Express.js server
 const express = require('express');
 const mysql = require('mysql2/promise'); // Using promise-based version
@@ -19,7 +40,14 @@ const dbConfig = {
 };
 
 // Database connection pool instead of single connection
-const { pool, testConnection } = require('./database');
+pool.getConnection()
+    .then(connection => {
+        console.log('Database connected successfully');
+        connection.release();
+    })
+    .catch(err => {
+        console.error('Database connection failed:', err);
+    });
 
 // Test connection when server starts
 testConnection()
