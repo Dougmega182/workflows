@@ -35,7 +35,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'Autobots'
-          package: 'backend/' # ✅ Ensure we're deploying the backend folder
+          package: 'backend/'
 
       - name: Restart Azure Web App
         run: |
