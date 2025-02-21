@@ -1,3 +1,5 @@
+// script.js
+
 async function submitForm(action) {
     const form = document.getElementById('signForm');
     const formData = {
@@ -15,11 +17,11 @@ async function submitForm(action) {
 
     // Visual feedback during submission
     form.classList.add('loading');
-
+    // Number of retry attempts
     let retries = 3;
     while (retries > 0) {
         try {
-            const response = await fetch(`https://autobots-dbgrgmdrgphhd0c9.australiasoutheast-01.azurewebsites.net/${action}`, {
+            const response = await fetch(`https://autobots-dbgrgmdrgphhd0c9.australiasoutheast-01.azurewebsites.net${action}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,7 +44,7 @@ async function submitForm(action) {
 
                 throw new Error(errorMessage);
             }
-
+    
             const data = await response.json();
             alert(`Successfully ${action === 'signin' ? 'signed in' : 'signed out'}: ${data.message}`);
             form.reset();
