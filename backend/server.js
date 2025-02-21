@@ -2,9 +2,11 @@ const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
 const path = require('path');
-
 const app = express(); // ✅ Define app before using it
 const port = process.env.PORT || 8080;
+
+// Import the database connection pool
+const { pool, testConnection } = require('./database');
 
 app.use(cors());
 app.use(express.json());
@@ -16,6 +18,20 @@ app.use(express.static(path.join(__dirname, 'frontend')));
 app.get('/health', (req, res) => {
     res.send({ status: "Server is running" });
 });
+
+// Test the database connection on startup
+async function initializeDatabase() {
+    try {
+        await testConnection();  // Test the connection and create the table
+        console.log("Database initialized successfully.");
+    } catch (error) {
+        console.error("Failed to initialize database:", error);
+        process.exit(1); // Exit the process if database initialization fails
+    }
+}
+
+// Call the initialization function
+initializeDatabase();
 
 // ✅ Serve index.html when accessing `/`
 app.get('/', (req, res) => {
@@ -40,13 +56,15 @@ db.connect(err => {
 });
 
 // Sign-In Tradesman
-app.post('/signin', (req, res) => {
+app.post('/signin', async (req, res) => {
     const { firstName, lastName, company, siteId } = req.body;
     const sql = 'INSERT INTO attendance (firstName, lastName, company, siteId, status) VALUES (?, ?, ?, ?, "IN")';
-    db.query(sql, [firstName, lastName, company, siteId], (err) => {
-        if (err) return res.status(500).json({ error: err.message });
+    try {
+        const [result] = await pool.query(sql, [firstName, lastName, company, siteId]);
         res.json({ message: 'Signed in successfully' });
-    });
+    } catch (err) {
+        console.error("Sign-in error:", err);
+        return res.status(500).json({ error: err.message });
 });
 
 // Sign-Out Tradesman
