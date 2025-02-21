@@ -18,22 +18,21 @@ async function testConnection() {
     try {
         const connection = await pool.getConnection();
         console.log('Database connected successfully');
-        
+
         // Test if table exists, create if it doesn't
         const createTable = `
-        CREATE TABLE IF NOT EXISTS attendance (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            firstName VARCHAR(255) NOT NULL,
-            lastName VARCHAR(255) NOT NULL,
-            company VARCHAR(255) NOT NULL,
-            siteId INT NOT NULL,
-            status ENUM('IN', 'OUT') NOT NULL,
-            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )`;
-        
+            CREATE TABLE IF NOT EXISTS attendance (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                firstName VARCHAR(255) NOT NULL,
+                lastName VARCHAR(255) NOT NULL,
+                company VARCHAR(255) NOT NULL,
+                siteId INT NOT NULL,
+                status ENUM('IN', 'OUT') NOT NULL,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        `;
         await connection.query(createTable);
         console.log('Attendance table verified/created');
-        
         connection.release();
     } catch (err) {
         console.error('Database connection failed:', err);
