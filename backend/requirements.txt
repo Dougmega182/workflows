@@ -1,7 +1,5 @@
-# requirements.txt
 fastapi
 uvicorn
 SQLAlchemy
 pymysql
 secure-smtplib
-email
