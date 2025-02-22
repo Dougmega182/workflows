@@ -3,5 +3,5 @@ fastapi
 uvicorn
 SQLAlchemy
 pymysql
-smtplib
+secure-smtplib
 email
