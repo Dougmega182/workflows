@@ -34,7 +34,7 @@ jobs:
       - name: Deploy FastAPI to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
-          app-name: autobots-dbgrgmdrgphhd0c9
+          app-name: autobots
           package: ./backend
           slot-name: production
 
