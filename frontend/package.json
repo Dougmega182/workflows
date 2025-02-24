@@ -4,17 +4,17 @@
   "description": "QR Code-based sign-in system for tradesmen",
   "main": "server.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test"
   },
   "dependencies": {
+    "@craco/craco": "^7.1.0",
+    "path-browserify": "^1.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
     "stream-http": "^3.2.0"
-    
   },
   "browserslist": {
     "production": [
