@@ -1,4 +1,3 @@
-// backend/server.js - Main Express server
 const express = require("express");
 const cors = require("cors");
 const db = require("./db");
@@ -17,7 +16,7 @@ app.use("/signout", signoutRoutes);
 app.use("/reports", reportRoutes);
 
 const port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0', () => {
+app.listen(port,() => {
     console.log(`Server running on port ${port}`);
 });
 
