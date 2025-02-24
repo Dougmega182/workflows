@@ -13,8 +13,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
-    "stream-http": "^3.2.0",
-    "net": "0.0.1"
+    "stream-http": "^3.2.0"
+    
   },
   "browserslist": {
     "production": [
