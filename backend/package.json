@@ -1,10 +1,11 @@
 {
-    "name": "azure-qr-tracking",
-    "version": "1.0.0",
-    "description": "QR Code-based sign-in system for tradesmen",
-    "main": "server.js",
+  "name": "azure-qr-tracking",
+  "version": "1.0.0",
+  "description": "QR Code-based sign-in system for tradesmen",
+  "main": "server.js",
+  
     "scripts": {
-      "start": "node server.js"
+      "start": "node index.js" 
     },
     "dependencies": {
       "express": "^4.18.2",
@@ -13,4 +14,3 @@
       "dotenv": "^16.0.3"
     }
   }
-  
