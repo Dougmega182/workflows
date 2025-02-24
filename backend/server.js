@@ -28,3 +28,19 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection:', reason);
 });
+
+const express = require('express');
+const path = require('path');
+
+// Serve static files from the React build folder
+app.use(express.static(path.join(__dirname, 'frontend/build')));
+
+// Catch-all route to serve index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
+});
+
+// Start server
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
