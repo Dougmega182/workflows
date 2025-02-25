@@ -14,4 +14,4 @@ def get_db():
 
 @router.post("/")
 def sign_out_worker():
-    return {"message": "Worker signed out"}
+    return {"message": "You have Successfully signed out"}
