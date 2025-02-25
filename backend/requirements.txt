@@ -135,4 +135,4 @@ fastapi
 uvicorn
 sqlalchemy
 mysql-connector-python
-
+gunicorn
