@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends
-from backend.routes import sites, signin, signout, reports
-from backend.database import init_db
+from routes import sites, signin, signout, reports
+from utils.database import init_db
 
 app = FastAPI()
 
