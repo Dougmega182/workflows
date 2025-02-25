@@ -22,7 +22,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-
+    
+      - name: Start Application
+        run: gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app
+        
       - name: Install backend dependencies
         working-directory: ./backend
         run: |
