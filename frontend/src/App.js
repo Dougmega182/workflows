@@ -1,55 +1,114 @@
-const express = require('express');
-const app = express();
-const path = require('path');
+import { useState } from "react";
+import axios from "axios";
 
-// Serve static files (CSS, images, etc.)
-app.use(express.static(path.join(__dirname, 'public')));
+export default function SignInOutPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    site: "",
+    swms: false,
+    induction: false,
+    action: "sign-in", // Default to sign-in
+  });
+  const [message, setMessage] = useState("");
 
-// Route to serve the HTML
-app.get('/', (req, res) => {
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>TransFor Sign In</title>
+  const handleChange = (e) => {
+    const { name, type, checked, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
 
-        </head>
-        <body>
-            <div class="container">
-                <h1>TransForm Homes Sign in/Sign Out</h1>
-                <form>
-                    <input type="text" placeholder="FULL NAME" required>
-                    <input type="text" placeholder="COMPANY NAME" required>
-                    <!-- Dropdown for Jobsite Names -->
-                    <select required>
-                        <option value="" disabled selected>Select Jobsite</option>
-                        <option value="jobsite1">Jobsite 1</option>
-                        <option value="jobsite2">Jobsite 2</option>
-                        <option value="jobsite3">Jobsite 3</option>
-                        <option value="jobsite4">Jobsite 4</option>
-                    </select>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage("Processing...");
+    try {
+      const endpoint =
+        formData.action === "sign-in" ? "/signin" : "/signout";
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}${endpoint}`,
+        formData
+      );
+      setMessage(response.data.message || "Success!");
+    } catch (error) {
+      setMessage("Error processing request. Please try again.");
+    }
+  };
 
-                    <div class="checkbox-group">
-                        <label>
-                            <input type="checkbox" required> I have read and signed any high risk work SWMS's
-                        </label>
-                        <label>
-                            <input type="checkbox" required> I have been inducted into this site
-                        </label>
-                    </div>
-
-                    <button type="submit">Sign in</button>
-                </form>
-            </div>
-        </body>
-        </html>
-    `);
-});
-
-// Start the server
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-    console.log(`Server is running on http://autobots-dbgrgmdrgphhd0c9.australiasoutheast-01.azurewebsites.net:${PORT}`);
-});
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-xl font-bold mb-4 text-center">
+          {formData.action === "sign-in" ? "Sign In" : "Sign Out"}
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="text"
+            name="company"
+            placeholder="Company Name"
+            value={formData.company}
+            onChange={handleChange}
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="text"
+            name="site"
+            placeholder="Job Site"
+            value={formData.site}
+            onChange={handleChange}
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              name="swms"
+              checked={formData.swms}
+              onChange={handleChange}
+              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            />
+            <label className="text-gray-700">SWMS Completed</label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              name="induction"
+              checked={formData.induction}
+              onChange={handleChange}
+              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            />
+            <label className="text-gray-700">Induction Completed</label>
+          </div>
+          <div className="flex justify-between">
+            <button
+              type="submit"
+              onClick={() => setFormData({ ...formData, action: "sign-in" })}
+              className="w-1/2 bg-green-500 text-white p-2 rounded hover:bg-green-600"
+            >
+              Sign In
+            </button>
+            <button
+              type="submit"
+              onClick={() => setFormData({ ...formData, action: "sign-out" })}
+              className="w-1/2 bg-red-500 text-white p-2 rounded hover:bg-red-600"
+            >
+              Sign Out
+            </button>
+          </div>
+        </form>
+        {message && <p className="mt-4 text-center text-gray-700">{message}</p>}
+      </div>
+    </div>
+  );
+}
