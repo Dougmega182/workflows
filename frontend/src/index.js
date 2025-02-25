@@ -1,13 +1,11 @@
-const express = require("express");
-const app = express();
-const port = process.env.PORT || 8080;
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App'; // Your main App component
+import './index.css'; // Optional: Import your CSS
 
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("Construction Sign-in App Running");
-});
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />  {/* Render your main App component */}
+  </React.StrictMode>
+);
