@@ -31,8 +31,8 @@ jobs:
 
     - name: Install Backend Dependencies
       run: |
-          cd backend
-          npm install --legacy-peer-deps || npm install 
+          cd wwwroot/backend
+          npm ci || npm install 
 
     - name: Build Backend
       run: |
@@ -66,8 +66,8 @@ jobs:
 
       - name: Install Frontend Dependencies
         run: |
-          cd frontend
-          npm install --legacy-peer-deps || npm install 
+          cd wwwroot/frontend
+          npm ci || npm install
 
       - name: Build Frontend
         run: |
