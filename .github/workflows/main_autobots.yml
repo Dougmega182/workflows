@@ -37,7 +37,6 @@ jobs:
 
     - name: Build Backend
       run: |
-          cd backend
           npm run build || echo "No build script, skipping..."
 
     - name: Deploy Backend to Azure
@@ -72,7 +71,6 @@ jobs:
 
       - name: Build Frontend
         run: |
-          cd frontend
           npm run build
 
       - name: Deploy Frontend to Azure
