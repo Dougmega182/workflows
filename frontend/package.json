@@ -4,12 +4,10 @@
   "description": "QR Code-based sign-in system for tradesmen",
   "main": "server.js",
   "scripts": {
-  "start": "react-scripts start",
-  "build": "react-scripts build",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject"
-  }
-
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@craco/craco": "^5.9.0",
@@ -21,7 +19,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.2.0",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "5.0.1",
     "stream-http": "^3.2.0",
     "url": "^0.11.1",
     "util": "^0.12.5"
@@ -46,6 +44,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+  "license": "ISC"
 }
