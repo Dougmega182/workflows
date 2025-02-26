@@ -1,5 +1,7 @@
 import express from "express";
 import pool from "../config/db.js";
+import { signIn, signOut, getAttendanceRecords } from "../models/attendance.js";
+
 
 const router = express.Router();
 

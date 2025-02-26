@@ -1,6 +1,7 @@
 {
   "name": "azure-qr-tracking",
   "version": "1.0.0",
+  "type": "module",
   "description": "QR Code-based sign-in system for tradesmen",
   "main": "server.js",
   "scripts": {
