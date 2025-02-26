@@ -29,10 +29,16 @@ jobs:
           node-version: 20
           cache: "npm"
 
+    - name: Ensure Lock File Exists
+      run: ls -R
+        
     - name: Install Backend Dependencies
       run: |
-          cd backend
-          npm install --legacy-peer-deps || npm install 
+        if [ -f package-lock.json ]; then 
+          npm ci
+        else 
+          npm install 
+        fi
 
     - name: Build Backend
       run: |
