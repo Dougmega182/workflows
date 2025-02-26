@@ -10,13 +10,15 @@
   },
   "dependencies": {
     "@craco/craco": "^5.9.0",
+    "@tailwindcss/vite": "^4.0.9",
     "axios": "^1.7.9",
     "buffer": "^6.0.3",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.2.0",
+    "react-scripts": "^3.0.1",
     "stream-http": "^3.2.0",
     "url": "^0.11.1",
     "util": "^0.12.5"
@@ -34,6 +36,13 @@
     ]
   },
   "devDependencies": {
-    "eslint-webpack-plugin": "^4.2.0"
-  }
+    "autoprefixer": "^10.4.20",
+    "eslint-webpack-plugin": "^4.2.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.0.9"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
 }
