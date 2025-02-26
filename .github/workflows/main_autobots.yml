@@ -30,7 +30,9 @@ jobs:
           cache: "npm"
 
     - name: Ensure Lock File Exists
-      run: ls -R
+      run: |
+          ls -R backend/
+          ls -R frontend/
         
     - name: Install Backend Dependencies
       run: |
