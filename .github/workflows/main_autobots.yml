@@ -5,47 +5,41 @@ on:
     branches:
       - main
   workflow_dispatch: 
-  
+
 jobs:
-  
   deploy-backend:
     name: Deploy Backend (Node.js)
     runs-on: ubuntu-latest
     steps:
-    - name: Clear Azure Cache
-      run: |
-        az webapp deployment source config-zip --resource-group autobot --name autobots --src /dev/null || true
-      
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20
-        cache: "npm"
-        cache-dependency-path: backend/package-lock.json
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "npm"
+          cache-dependency-path: backend/package-lock.json
 
-    - name: Install Backend Dependencies
-      run: |
-        cd backend
-        npm ci || npm install 
+      - name: Install Backend Dependencies
+        run: npm ci
+        working-directory: backend  # 🔥 Fix: Now runs inside "backend"
 
-    - name: Build Backend
-      run: |
-        npm run build || echo "No build script, skipping..."
+      - name: Build Backend
+        run: npm run build || echo "No build script, skipping..."
+        working-directory: backend  # 🔥 Fix: Now runs inside "backend"
 
-    - name: Deploy Backend to Azure
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: "autobots"
-        package: "./backend"
-  
+      - name: Deploy Backend to Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "autobots"
+          package: "./backend"
+
   deploy-frontend:
     name: Deploy Frontend (React)
     runs-on: ubuntu-latest
@@ -67,13 +61,12 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install Frontend Dependencies
-        run: |
-          cd frontend
-          npm ci || npm install
+        run: npm ci
+        working-directory: frontend  # 🔥 Fix: Now runs inside "frontend"
 
       - name: Build Frontend
-        run: |
-          npm run build
+        run: npm run build
+        working-directory: frontend  # 🔥 Fix: Now runs inside "frontend"
 
       - name: Deploy Frontend to Azure
         uses: azure/webapps-deploy@v2
