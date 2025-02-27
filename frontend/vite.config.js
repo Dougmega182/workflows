@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "build",  // ✅ Ensures everything goes into /build
+    outDir: "dist",  // ✅ Ensures everything goes into /build
     assetsDir: "static",  // ✅ Forces JS & CSS into /static
     rollupOptions: {
       output: {
