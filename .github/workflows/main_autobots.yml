@@ -69,9 +69,6 @@ jobs:
             cd frontend
             npm run build  # ✅ This will now output to `build/` instead of `dist/`
         
-      - name: Verify Frontend Build
-        run: |
-            ls -la frontend/build  # ✅ Ensure `build/` exists before deployment
         
       - name: Deploy Frontend to Azure
         uses: azure/webapps-deploy@v2
