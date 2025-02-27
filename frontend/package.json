@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "QR Code-based sign-in system for tradesmen",
   "main": "server.js",
+  "homepage": "/frontend",
+
   "scripts": {
     "start": "vite",
     "build": "vite build",

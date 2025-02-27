@@ -1,9 +1,9 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-  plugins: [react()],
+  base: "./", // Ensures correct relative paths
   build: {
-    outDir: "build",  // ✅ Change `dist/` to `build/` for Azure compatibility
+    outDir: "dist",  // Use dist/ as output folder
+    assetsDir: "assets",  // Puts JS/CSS inside dist/assets
   },
 });
