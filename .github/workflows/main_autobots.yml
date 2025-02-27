@@ -71,11 +71,11 @@ jobs:
         
       - name: Verify Frontend Build
         run: |
-            ls -la frontend/dist  # ✅ Ensure `build/` exists before deployment
+            ls -la frontend/build  # ✅ Ensure `build/` exists before deployment
         
       - name: Deploy Frontend to Azure
         uses: azure/webapps-deploy@v2
         with:
           app-name: "autobots-frontend"
-          package: "./frontend/build"
+          package: "./frontend/dist"
         
