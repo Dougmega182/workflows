@@ -8,8 +8,8 @@ on:
 env:
   AZURE_WEBAPP_NAME_BACKEND: tradesmen-backend
   AZURE_WEBAPP_NAME_FRONTEND: tradesmen-frontend
-  AZURE_WEBAPP_PACKAGE_PATH_BACKEND: ./tradesmen-backend
-  AZURE_WEBAPP_PACKAGE_PATH_FRONTEND: ./tradesmen-frontend
+  AZURE_WEBAPP_PACKAGE_PATH_BACKEND: ./tradesman-backend
+  AZURE_WEBAPP_PACKAGE_PATH_FRONTEND: ./tradesman-frontend
 
 jobs:
   deploy:
