@@ -17,16 +17,28 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
+      with:
+        submodules: true
+        fetch-depth: 0
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
 
+    - name: Verify Directory Structure
+      run: |
+        echo "Checking available directories:"
+        ls -al
+
     - name: Install Dependencies (Backend)
       run: |
-        cd ${{ env.AZURE_WEBAPP_PACKAGE_PATH_BACKEND }}
-        npm install
+        if [ -d "$AZURE_WEBAPP_PACKAGE_PATH_BACKEND" ]; then
+          cd $AZURE_WEBAPP_PACKAGE_PATH_BACKEND
+          npm install
+        else
+          echo "Backend directory not found!" && exit 1
+        fi
 
     - name: Deploy Backend to Azure
       uses: azure/webapps-deploy@v2
@@ -37,9 +49,13 @@ jobs:
 
     - name: Install Dependencies (Frontend)
       run: |
-        cd ${{ env.AZURE_WEBAPP_PACKAGE_PATH_FRONTEND }}
-        npm install
-        npm run build
+        if [ -d "$AZURE_WEBAPP_PACKAGE_PATH_FRONTEND" ]; then
+          cd $AZURE_WEBAPP_PACKAGE_PATH_FRONTEND
+          npm install
+          npm run build
+        else
+          echo "Frontend directory not found!" && exit 1
+        fi
 
     - name: Deploy Frontend to Azure
       uses: azure/webapps-deploy@v2
