@@ -1,0 +1,24 @@
+import React from "react";
+import { Formik, Form, Field } from "formik";
+import { signIn } from "../services/api";
+
+const SignInForm = () => {
+    return (
+        <Formik
+            initialValues={{ name: "", mobile_number: "", company: "", swms_acknowledged: false, induction_completed: false }}
+            onSubmit={async (values) => {
+                const response = await signIn(values);
+                console.log(response.data);
+            }}
+        >
+            <Form>
+                <Field name="name" placeholder="Name" required />
+                <Field name="mobile_number" placeholder="Mobile Number" required />
+                <Field name="company" placeholder="Company" required />
+                <button type="submit">Sign In</button>
+            </Form>
+        </Formik>
+    );
+};
+
+export default SignInForm;
