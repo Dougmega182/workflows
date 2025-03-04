@@ -67,7 +67,7 @@ jobs:
       run: |
         echo "Navigating to frontend directory:"
         ls -al "$GITHUB_WORKSPACE/tradesmen-frontend" || (echo "Frontend directory not found!" && exit 1)
-        cd "$GITHUB_WORKSPACE/tradesman-frontend"
+        cd "$GITHUB_WORKSPACE/tradesmen-frontend"
         npm install
         npm run build
 
