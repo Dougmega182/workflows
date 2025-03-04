@@ -22,6 +22,7 @@ jobs:
       with:
         submodules: true
         fetch-depth: 0
+        path: ./
 
     - name: Azure Login
       uses: azure/login@v1
@@ -34,15 +35,12 @@ jobs:
         az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan ASP-TradesmenApp-be2a --name $AZURE_WEBAPP_NAME_BACKEND --runtime "NODE|18-lts" --output none || echo "Backend Web App already exists."
         az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan B1 --name $AZURE_WEBAPP_NAME_FRONTEND --runtime "NODE|18-lts" --output none || echo "Frontend Web App already exists."
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18.x'
-
     - name: Verify Directory Structure
       run: |
         echo "Checking available directories:"
         ls -al
+        echo "Checking project structure recursively:"
+        find . -maxdepth 2
 
     - name: Install Dependencies (Backend)
       run: |
