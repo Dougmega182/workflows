@@ -11,7 +11,7 @@ env:
   AZURE_RESOURCE_GROUP: tradesmen-app-rg
   AZURE_LOCATION: australiaeast
   AZURE_WEBAPP_PACKAGE_PATH_BACKEND: ./tradesman-backend
-  AZURE_WEBAPP_PACKAGE_PATH_FRONTEND: ./tradesman-frontend
+  AZURE_WEBAPP_PACKAGE_PATH_FRONTEND: ./tradesmen-frontend
 
 jobs:
   deploy:
