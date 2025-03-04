@@ -8,7 +8,7 @@ on:
 env:
   AZURE_WEBAPP_NAME_BACKEND: tradesmen-backend
   AZURE_WEBAPP_NAME_FRONTEND: tradesmen-frontend
-  AZURE_RESOURCE_GROUP: tradesmen-app-rg
+  AZURE_RESOURCE_GROUP: TradesmenApp
   AZURE_LOCATION: australiaeast
   AZURE_WEBAPP_PACKAGE_PATH_BACKEND: tradesman-backend
   AZURE_WEBAPP_PACKAGE_PATH_FRONTEND: tradesmen-frontend
@@ -31,8 +31,9 @@ jobs:
     - name: Ensure Azure Web Apps Exist
       run: |
         az group create --name $AZURE_RESOURCE_GROUP --location $AZURE_LOCATION
-        az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan ASP-TradesmenApp-be2a --name $AZURE_WEBAPP_NAME_BACKEND --runtime "NODE|18-lts" --output none || echo "Backend Web App already exists."
-        az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan B1 --name $AZURE_WEBAPP_NAME_FRONTEND --runtime "NODE|18-lts" --output none || echo "Frontend Web App already exists."
+        az appservice plan create --name ASP-TradesmenApp-be2a --resource-group $AZURE_RESOURCE_GROUP --sku B1 --is-linux || echo "App Service Plan already exists."
+        az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan ASP-TradesmenApp-be2a --name $AZURE_WEBAPP_NAME_BACKEND --runtime "NODE|18-lts" --output json || echo "Backend Web App already exists."
+        az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan ASP-TradesmenApp-be2a --name $AZURE_WEBAPP_NAME_FRONTEND --runtime "NODE|18-lts" --output json || echo "Frontend Web App already exists."
 
     - name: Verify Directory Structure
       run: |
