@@ -1,0 +1,49 @@
+name: Deploy Full Stack to Azure App Service
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_WEBAPP_NAME_BACKEND: tradesmen-backend
+  AZURE_WEBAPP_NAME_FRONTEND: tradesmen-frontend
+  AZURE_WEBAPP_PACKAGE_PATH_BACKEND: ./tradesmen-backend
+  AZURE_WEBAPP_PACKAGE_PATH_FRONTEND: ./tradesmen-frontend
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+
+    - name: Install Dependencies (Backend)
+      run: |
+        cd ${{ env.AZURE_WEBAPP_PACKAGE_PATH_BACKEND }}
+        npm install
+
+    - name: Deploy Backend to Azure
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME_BACKEND }}
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_BACKEND }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH_BACKEND }}
+
+    - name: Install Dependencies (Frontend)
+      run: |
+        cd ${{ env.AZURE_WEBAPP_PACKAGE_PATH_FRONTEND }}
+        npm install
+        npm run build
+
+    - name: Deploy Frontend to Azure
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME_FRONTEND }}
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_FRONTEND }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH_FRONTEND }}/build
