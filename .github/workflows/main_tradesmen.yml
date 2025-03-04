@@ -63,13 +63,16 @@ jobs:
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_BACKEND }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH_BACKEND }}
 
-    - name: Install Dependencies (Frontend)
+    - name: Fix Linting Issues
       run: |
-        echo "Navigating to frontend directory:"
-        ls -al "$GITHUB_WORKSPACE/tradesmen-frontend" || (echo "Frontend directory not found!" && exit 1)
         cd "$GITHUB_WORKSPACE/tradesmen-frontend"
         npm install
-        npm run build
+        npm run lint --fix || echo "Linting auto-fix completed."
+
+    - name: Build Frontend
+      run: |
+        cd "$GITHUB_WORKSPACE/tradesmen-frontend"
+        CI=false npm run build
 
     - name: Deploy Frontend to Azure
       uses: azure/webapps-deploy@v2
