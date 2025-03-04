@@ -10,7 +10,7 @@ env:
   AZURE_WEBAPP_NAME_FRONTEND: tradesmen-frontend
   AZURE_RESOURCE_GROUP: tradesmen-app-rg
   AZURE_LOCATION: australiaeast
-  AZURE_WEBAPP_PACKAGE_PATH_BACKEND: ./tradesman-backend
+  AZURE_WEBAPP_PACKAGE_PATH_BACKEND: tradesman-backend
   AZURE_WEBAPP_PACKAGE_PATH_FRONTEND: tradesman-frontend
 
 jobs:
@@ -22,7 +22,6 @@ jobs:
       with:
         submodules: true
         fetch-depth: 0
-        path: ./
 
     - name: Azure Login
       uses: azure/login@v1
@@ -37,15 +36,21 @@ jobs:
 
     - name: Verify Directory Structure
       run: |
-        echo "Checking available directories:"
-        ls -al
-        echo "Checking project structure recursively:"
-        find . -maxdepth 2
+        echo "Current Working Directory:"
+        pwd
+        echo "Listing all directories in the workspace:"
+        find . -type d
+        echo "Checking if frontend directory exists:"
+        if [ -d "tradesman-frontend" ]; then
+          echo "✅ tradesman-frontend found!"
+        else
+          echo "❌ tradesman-frontend NOT FOUND!"
+        fi
 
     - name: Install Dependencies (Backend)
       run: |
-        if [ -d "$AZURE_WEBAPP_PACKAGE_PATH_BACKEND" ]; then
-          cd $AZURE_WEBAPP_PACKAGE_PATH_BACKEND
+        if [ -d "$GITHUB_WORKSPACE/tradesman-backend" ]; then
+          cd "$GITHUB_WORKSPACE/tradesman-backend"
           npm install
         else
           echo "Backend directory not found!" && exit 1
@@ -60,13 +65,11 @@ jobs:
 
     - name: Install Dependencies (Frontend)
       run: |
-        if [ -d "$AZURE_WEBAPP_PACKAGE_PATH_FRONTEND" ]; then
-          cd $AZURE_WEBAPP_PACKAGE_PATH_FRONTEND
-          npm install
-          npm run build
-        else
-          echo "Frontend directory not found!" && exit 1
-        fi
+        echo "Navigating to frontend directory:"
+        ls -al "$GITHUB_WORKSPACE/tradesman-frontend" || (echo "Frontend directory not found!" && exit 1)
+        cd "$GITHUB_WORKSPACE/tradesman-frontend"
+        npm install
+        npm run build
 
     - name: Deploy Frontend to Azure
       uses: azure/webapps-deploy@v2
