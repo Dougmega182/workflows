@@ -10,8 +10,8 @@ env:
   AZURE_WEBAPP_NAME_FRONTEND: tradesmen-frontend
   AZURE_RESOURCE_GROUP: tradesmen-app-rg
   AZURE_LOCATION: australiaeast
-  AZURE_WEBAPP_PACKAGE_PATH_BACKEND: ./tradesman-backend
-  AZURE_WEBAPP_PACKAGE_PATH_FRONTEND: ../tradesman-frontend
+  AZURE_WEBAPP_PACKAGE_PATH_BACKEND: /workflows/tradesman-backend
+  AZURE_WEBAPP_PACKAGE_PATH_FRONTEND: /workflows/tradesmen-frontend
 
 jobs:
   deploy:
